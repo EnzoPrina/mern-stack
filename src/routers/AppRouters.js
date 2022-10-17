@@ -9,6 +9,10 @@ import RegisterPage from '../pages/RegisterPage';
 import UserPage from '../pages/admin/UserPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import Layout from '../components/layout/Layout';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+import roles from '../helpers/roles';
+import routes from '../helpers/routes';
 
 
 export default function AppRouters() {
@@ -16,13 +20,14 @@ export default function AppRouters() {
     <Router>
       <Layout>
             <Routes>
-                <Route exact path="/" element={ <HomePage/> } />
-                <Route exact path="/login" element={ <LoginPage/> } />
-                <Route exact path="/register" element={ <RegisterPage/> } />
-                <Route exact path="/account" element={ <AccountPage/> } />
-                <Route exact path="/projects" element={ <ProjectsPage/> } />
-                <Route exact path="/project/:projectId" element={ <ProjectPage/> } />
-                <Route exact path="/admin/users" element={ <UserPage/> } />
+                <Route exact path={routes.home} element={ <HomePage/> } />
+                <Route exact path={routes.login} element={ <LoginPage/> } />
+                <Route exact path={routes.register} element={ <RegisterPage/> } />
+                <Route exact path={routes.account} element={ <AccountPage/> } />
+                <Route exact path={routes.projects} element={ <PrivateRoute> <ProjectsPage/>
+                  </PrivateRoute> } />
+                <Route exact path={routes.project()} element={ <ProjectPage/> } />
+                <Route hasRole={roles.admin} exact path={routes.admin.users} element={ <UserPage/> } />
 
                 <Route path="*" element={NotFoundPage} />
             </Routes>
